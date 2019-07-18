@@ -5,30 +5,33 @@ require 'rubocop'
 
 # /deputes/fiche/OMC_PA722268
 
+# PB DE CONNEXION TCP DEPUIS 20H..............
+
+
 def get_first_name(url)
 	page = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr#{url[1..-1]}"))
 
-	get_first = page.xpath('/html/body/div/div[3]/div/div/div/section[1]/div/article/div[2]/h1').text
+	get_first = page.xpath('//body/div/div[3]/div/div/section/div/article/div[3]/div/div/div/ul/li/a').text
 
 	# sort un tableau [ mme/mr, prenom, nom]
 	first_name = (get_first.split)[1]
 
 end
 
-# puts get_first_name
+# puts get_first_name('/deputes/fiche/OMC_PA720728')
 
 def get_last_name(url)
 	page = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr#{url[1..-1]}"))
 
 	get_last = page.xpath('/html/body/div/div[3]/div/div/div/section[1]/div/article/div[2]/h1').text
 
-	# sort un tableau [ mme/mr, prenom, nom]
 
 	last_name = (get_last.split)[2]
 
 end
 
-#{url[1..-1]}"
+puts get_last_name('/deputes/fiche/OMC_PA722268')
+
 def get_e_mail(url)
 
 	page = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr#{url[1..-1]}"))
@@ -38,20 +41,19 @@ def get_e_mail(url)
 
 end
 
-puts get_e_mail('/deputes/fiche/OMC_PA722268')
+# puts get_e_mail(url)
 
 	
 def get_depute_urls
 
   page = Nokogiri::HTML(open("http://www2.assemblee-nationale.fr/deputes/liste/alphabetique"))
-  get_urls = page.xpath('//*[@id="deputes-list"]/div/ul/li/a')
-  get_urls.to_s.scan(/"([^"]*)"/)
-
-
-
+  urls = page.xpath('//body/div/div[3]/div/div/section/div/article/div[3]/div/div/div/ul/li/a/@href')
+  [urls]
 end
 
 puts get_depute_urls
+
+
 
 # def hashe
 # 	hashe_out = Hash.new
@@ -60,23 +62,23 @@ puts get_depute_urls
 
 # end
 
-def perform
-	array_out = Array.new
+# def perform
+# 	array_out = Array.new
 
-	hashe_out = Hash.new
+# 	hashe_out = Hash.new
 
-	array_urls = get_depute_urls
+# 	array_urls = get_depute_urls
 
-	array_urls.each do |url|
+# 	array_urls.each do |url|
 
-		hashe_out = {"first_name" => get_first_name(url.join), "last_name" => get_last_name(url.join), "email" => get_e_mail(url.join)}
+# 		hashe_out = {"first_name" => get_first_name(url.join), "last_name" => get_last_name(url.join), "email" => get_e_mail(url.join)}
 
-	array_out << hashe_out
+# 	array_out << hashe_out
 
-	# puts array_out
+# 	# puts array_out
 
-	end	
+# 	end	
 	
-end
+# end
 
 # puts perform
