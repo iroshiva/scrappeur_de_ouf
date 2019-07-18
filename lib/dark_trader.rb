@@ -12,6 +12,8 @@ def collect_lign_curr_price
 	# methode qui collecte un tableau contenant un tableau currencies et un tableau prices : [[currencies][prices]]
 
 	page = Nokogiri::HTML(open("https://coinmarketcap.com/all/views/all/"))
+
+	
 	currencies = page.xpath('//td[3]')
 	# met dans [currencies] toutes les lignes de code contenant chacune une currency
 
